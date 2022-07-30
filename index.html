@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Lift Simulation</title>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <header>
+      <h2>Lift Simulator</h2>
+    </header>
+
+    <main class="main-container">
+      <section>
+        <form class="form">
+          <div class="form-control">
+            <label for="floors">Number of floors</label>
+            <br />
+            <!-- TODO: Disable arrow keys -->
+            <input class="floors-input" type="number" id="floors" placeholder="Enter number of floors" onkeypress="handleNumericKeyPress(event)" />
+            <small>Error message</small>
+          </div>
+
+          <div class="form-control">
+            <label for="lifts">Number of lifts</label>
+            <br />
+            <!-- TODO: Disable arrow keys -->
+            <input class="lifts-input" type="number" id="lifts" placeholder="Enter number of lifts"
+            onkeypress="handleNumericKeyPress(event)" 
+            />
+            <small>Error message</small>
+          </div>
+
+          <input class="btn btn-primary" type="submit" value="Generate"></input>
+        </form>
+      </section>
+
+      <section class="floors-container">
+        <!-- <div class="floor">
+          <div class="lift-buttons">
+            <button class="btn-up">
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+            <button class="btn-down">
+              <i class="fa-solid fa-arrow-down"></i>
+            </button>
+          </div>
+        </div> -->
+      </section>
+    </main>
+
+    <footer>Made with ❤️ by Vinit Raut</footer>
+  </body>
+</html>

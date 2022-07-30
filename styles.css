@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --primary-color: #9333ea;
+  --primary-color-light: #faf5ff;
+  --success-green: #16a34a;
+  --error-red: #ef4444;
+  --lift-bg: #57534e;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.8rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  padding: 10px 30px;
+  background: var(--primary-color);
+  color: var(--primary-color-light);
+}
+
+.main-container {
+  height: 82vh;
+}
+
+.form {
+  background-color: var(--primary-color-light);
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+  border-radius: 5px;
+  padding: 30px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.form-control {
+  margin-bottom: 15px;
+}
+
+.form-control small {
+  display: none;
+}
+
+.form-control.success input {
+  border-color: var(--success-green);
+}
+
+.form-control.error input {
+  border-color: var(--error-red);
+}
+
+.form-control.error small {
+  display: block;
+  color: var(--error-red);
+  margin-top: 2px;
+}
+
+label {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+input {
+  padding: 1rem;
+  border-radius: 5px;
+  border: 2px solid var(--primary-color);
+  font-family: inherit;
+  font-size: 1.6rem;
+  width: 100%;
+}
+
+input:active,
+input:focus {
+  outline-color: var(--primary-color);
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 0;
+  background: var(--primary-color);
+  color: var(--primary-color-light);
+  font-size: 2rem;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: all 200ms;
+}
+
+.btn:hover {
+  background-color: #a855f7;
+}
+
+/* Floor styles */
+.floors-container {
+  display: none;
+}
+
+.floor {
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  height: 150px;
+  margin-top: 100px;
+  border-bottom: 2px solid #ddd;
+  border-radius: 5px;
+}
+
+.lift-buttons {
+  margin-right: 100px;
+}
+
+.lifts {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.lift {
+  margin-right: 50px;
+  height: 100%;
+  width: 100px;
+  background: var(--lift-bg);
+}
+
+.btn-up {
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--success-green);
+  color: #fff;
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+.btn-down {
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--error-red);
+  color: #fff;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+footer {
+  text-align: center;
+}
