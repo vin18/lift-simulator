@@ -7,8 +7,6 @@ const lifts = document.querySelector('.lifts');
 const floorsErrorMessage = document.querySelector('.floors-input + small');
 const liftsErrorMessage = document.querySelector('.lifts-input + small');
 
-let floors = [];
-
 function handleNumericKeyPress(event) {
   const inputValidationChecks =
     !/[0-9]/.test(event.key) ||
@@ -26,46 +24,66 @@ function handleSubmit(event) {
   handleFormValidation();
   handleFloors();
   handleLifts();
-  console.log(floorsInput.value);
-  console.log(typeof liftsInput.value);
-  console.log(floorsContainer);
 }
 
 function handleFloors() {
-  const numberOfFloors = parseInt(floorsInput.value);
+  const numberOfFloors = 3 || parseInt(floorsInput.value);
+  const numberOfLifts = 3 || parseInt(liftsInput.value);
+  const lastFloor = numberOfFloors - 1;
 
-  const liftHtml = `
-    <div class="floor">
+  for (let i = lastFloor; i >= 0; i--) {
+    const floorHtml = `
+    <div class="floor" data-current-floor=${i}>
       <div class="lift-buttons">
-        <button class="btn-up">
-          <i class="fa-solid fa-arrow-up"></i>
-        </button>
-        <button class="btn-down">
-          <i class="fa-solid fa-arrow-down"></i>
-        </button>
+        ${
+          i !== lastFloor
+            ? `
+          <button onclick="handleLiftUpMove(${i})" class="btn-up ${i}">
+            <i class="fa-solid fa-arrow-up"></i>
+          </button>`
+            : ''
+        }
+       
+        ${
+          i !== 0
+            ? `
+          <button onclick="handleLiftDownMove(${i})" class="btn-down ${i}">
+            <i class="fa-solid fa-arrow-down"></i>
+          </button>
+        `
+            : ''
+        }
       </div>
+
+      ${numberOfLifts > 1 && i === 0 ? handleLifts() : ''}
     </div>
   `;
 
-  for (let i = 0; i < numberOfFloors; i++) {
-    floorsContainer.insertAdjacentHTML('beforeend', liftHtml);
+    floorsContainer.insertAdjacentHTML('beforeend', floorHtml);
   }
 }
 
 function handleLifts() {
-  const numberOfLifts = parseInt(liftsInput.value);
-  floors = Array(numberOfLifts).fill(0);
-
-  floorsContainer.style.display = 'block';
+  const divElement = document.createElement('div');
+  divElement.classList.add('lifts');
+  const numberOfLifts = 3 || parseInt(liftsInput.value);
 
   for (let i = 0; i < numberOfLifts; i++) {
-    const lifts = document.createElement('div');
-    lifts.classList.add('lifts');
-    const lift = document.createElement('div');
-    lift.classList.add('lift');
-    floor.appendChild(lifts);
-    lifts.appendChild(lift);
+    const liftHtml = `
+      <div class="lift">
+        <div class="lift-left-door-container">
+          <div class="lift-left-door"></div>
+        </div>
+        <div class="lift-right-door-container">
+          <div class="lift-right-door"></div>
+        </div>
+      </div>
+    `;
+
+    divElement.insertAdjacentHTML('beforeend', liftHtml);
   }
+
+  return divElement.innerHTML;
 }
 
 function handleFormValidation() {
@@ -95,4 +113,14 @@ function handleError(element, errorElement, errorMessage = '') {
   errorElement.style.display = 'block';
 }
 
+function handleLiftDownMove(floorNumber) {
+  console.log(floorNumber);
+}
+
+function handleLiftUpMove(floorNumber) {
+  console.log(floorNumber);
+}
+
+handleFloors();
+handleLifts();
 form.addEventListener('submit', handleSubmit);

@@ -103,7 +103,7 @@ input:focus {
 
 /* Floor styles */
 .floors-container {
-  display: none;
+  /* display: none; */
 }
 
 .floor {
@@ -127,10 +127,63 @@ input:focus {
 }
 
 .lift {
-  margin-right: 50px;
   height: 100%;
-  width: 100px;
-  background: var(--lift-bg);
+  max-width: 150px;
+  border: 4px solid var(--primary-color);
+  padding: 2px;
+  min-width: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.lift:not(:last-child) {
+  margin-right: 100px;
+}
+
+.lift-left-door {
+  background-color: var(--primary-color);
+  height: 100%;
+  width: 100%;
+  animation-name: openCloseLeftDoor;
+  animation-duration: 5s;
+}
+
+.lift-right-door {
+  background-color: var(--primary-color);
+  width: 100%;
+  height: 100%;
+  animation-name: openCloseRightDoor;
+  animation-duration: 5s;
+  float: right;
+}
+
+.lift-left-door-container,
+.lift-right-door-container {
+  width: 50%;
+  height: 100%;
+}
+
+.lift-left-door-container {
+  margin-right: 2px;
+}
+
+.lift-left-door-close {
+  animation-name: closeLeftDoor;
+  animation-duration: 2.5s;
+}
+
+.lift-right-door-open {
+  animation-name: openRightDoor;
+  animation-duration: 2.5s;
+}
+
+.lift-right-door-close {
+  animation-name: closeRightDoor;
+  animation-duration: 2.5s;
+  animation-delay: 3s;
 }
 
 .btn-up {
@@ -153,6 +206,34 @@ input:focus {
   color: #fff;
   font-size: 18px;
   margin-right: 10px;
+}
+
+@keyframes openCloseLeftDoor {
+  0% {
+    width: 100%;
+  }
+
+  50% {
+    width: 0px;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes openCloseRightDoor {
+  0% {
+    width: 100%;
+  }
+
+  50% {
+    width: 0px;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 footer {
