@@ -4,8 +4,11 @@ const floorsInput = document.querySelector('.floors-input');
 const liftsInput = document.querySelector('.lifts-input');
 const floorsContainer = document.querySelector('.floors-container');
 const lifts = document.querySelector('.lifts');
+const lift = document.querySelector('.lift');
 const floorsErrorMessage = document.querySelector('.floors-input + small');
 const liftsErrorMessage = document.querySelector('.lifts-input + small');
+
+let currentFloorCalled = 0;
 
 function handleNumericKeyPress(event) {
   const inputValidationChecks =
@@ -21,41 +24,44 @@ function handleNumericKeyPress(event) {
 
 function handleSubmit(event) {
   event.preventDefault();
+  floorsContainer.innerHTML = '';
   handleFormValidation();
   handleFloors();
   handleLifts();
 }
 
 function handleFloors() {
-  const numberOfFloors = 3 || parseInt(floorsInput.value);
-  const numberOfLifts = 3 || parseInt(liftsInput.value);
-  const lastFloor = numberOfFloors - 1;
+  const numberOfFloors = parseInt(floorsInput.value);
+  const numberOfLifts = parseInt(liftsInput.value);
+  const lastFloor = numberOfFloors === 1 ? 1 : numberOfFloors - 1;
 
   for (let i = lastFloor; i >= 0; i--) {
     const floorHtml = `
     <div class="floor" data-current-floor=${i}>
       <div class="lift-buttons">
         ${
-          i !== lastFloor
+          i !== 0
             ? `
-          <button onclick="handleLiftUpMove(${i})" class="btn-up ${i}">
-            <i class="fa-solid fa-arrow-up"></i>
+          <button data-current-floor="${i}" data-move-up="true" class="btn-up btn-up-${i}">
+            <i data-current-floor="${i}" data-move-up="true" class="fa-solid fa-arrow-up"></i>
           </button>`
             : ''
         }
-       
+
         ${
-          i !== 0
+          i !== lastFloor
             ? `
-          <button onclick="handleLiftDownMove(${i})" class="btn-down ${i}">
-            <i class="fa-solid fa-arrow-down"></i>
+          <button data-current-floor="${i}" data-move-down="true" class="btn-down btn-down-${i}">
+            <i data-current-floor="${i}" data-move-down="true" class="fa-solid fa-arrow-down"></i>
           </button>
         `
             : ''
         }
       </div>
 
-      ${numberOfLifts > 1 && i === 0 ? handleLifts() : ''}
+      <div class="lifts">
+        ${numberOfLifts >= 1 && i === 0 ? handleLifts() : ''}
+      </div>
     </div>
   `;
 
@@ -64,37 +70,37 @@ function handleFloors() {
 }
 
 function handleLifts() {
-  const divElement = document.createElement('div');
-  divElement.classList.add('lifts');
-  const numberOfLifts = 3 || parseInt(liftsInput.value);
+  const numberOfLifts = parseInt(liftsInput.value);
 
+  let innerHTML = '';
   for (let i = 0; i < numberOfLifts; i++) {
-    const liftHtml = `
-      <div class="lift">
+    innerHTML += `
+      <div class="lift" data-current-floor=${0}>
         <div class="lift-left-door-container">
-          <div class="lift-left-door"></div>
+          <div class="lift-left-door lift-left-door-open-close"></div>
         </div>
         <div class="lift-right-door-container">
-          <div class="lift-right-door"></div>
+          <div class="lift-right-door lift-right-door-open-close"></div>
         </div>
       </div>
     `;
-
-    divElement.insertAdjacentHTML('beforeend', liftHtml);
   }
-
-  return divElement.innerHTML;
+  return innerHTML;
 }
 
 function handleFormValidation() {
   if (floorsInput.value.trim() === '') {
     handleError(floorsInput, floorsErrorMessage, 'Floors value is required');
+  } else if (floorsInput.value > 5) {
+    alert('Please enter maximum 5 floors');
   } else {
     handleSuccess(floorsInput, floorsErrorMessage);
   }
 
   if (liftsInput.value.trim() === '') {
     handleError(liftsInput, liftsErrorMessage, 'Lifts value is required');
+  } else if (liftsInput.value > 5) {
+    alert('Please enter maximum 5 lifts');
   } else {
     handleSuccess(liftsInput, liftsErrorMessage);
   }
@@ -113,14 +119,47 @@ function handleError(element, errorElement, errorMessage = '') {
   errorElement.style.display = 'block';
 }
 
-function handleLiftDownMove(floorNumber) {
-  console.log(floorNumber);
-}
+document.addEventListener('click', function (event) {
+  const element = event.target;
+  const floorClicked = Number(element.dataset.currentFloor);
+  const liftMoveUp = element.dataset.moveUp === 'true';
+  const liftMoveDown = element.dataset.moveDown === 'true';
 
-function handleLiftUpMove(floorNumber) {
-  console.log(floorNumber);
-}
+  if (liftMoveUp) {
+    const lifts = Array.from(document.getElementsByClassName('lift'));
+    for (let i = 0; i < lifts.length; i++) {
+      const lift = lifts[i];
+      const currentFloor = Number(lift.dataset.currentFloor);
+      if (currentFloor < floorClicked && currentFloor !== floorClicked) {
+        lift.style.transition = `all ${2 * floorClicked}s`;
+        lift.style.transform = `translateY(-${250 * floorClicked}px)`;
+        lift.dataset.currentFloor = floorClicked;
+        break;
+      } else if (currentFloor === floorClicked) {
+        continue;
+      }
+    }
+  } else if (liftMoveDown) {
+    const lifts = Array.from(document.getElementsByClassName('lift'));
+    for (let i = 0; i < lifts.length; i++) {
+      const lift = lifts[i];
+      const currentFloor = Number(lift.dataset.currentFloor);
 
-handleFloors();
-handleLifts();
+      if (currentFloor > floorClicked && currentFloor !== floorClicked) {
+        if (floorClicked !== 0) {
+          lift.style.transform = `translateY(-${250 * floorClicked - 1}px)`;
+          lift.style.transition = `all ${2 * floorClicked}s`;
+        } else {
+          lift.style.transform = `translateY(0px)`;
+          lift.style.transition = `all ${2}s`;
+        }
+        lift.dataset.currentFloor = floorClicked;
+        break;
+      } else if (currentFloor === floorClicked) {
+        continue;
+      }
+    }
+  }
+});
+
 form.addEventListener('submit', handleSubmit);
