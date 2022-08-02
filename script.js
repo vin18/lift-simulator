@@ -23,7 +23,7 @@ function handleNumericKeyPress(event) {
 }
 
 function handleSubmit(event) {
-  event.preventDefault();
+  event?.preventDefault();
   floorsContainer.innerHTML = '';
   handleFormValidation();
   handleFloors();
@@ -172,7 +172,7 @@ document.addEventListener('click', function (event) {
             'lift-right-door-open-close'
           );
           lift.dataset.busy = false;
-        }, 7000);
+        }, 5000);
         break;
       }
     }
@@ -229,7 +229,7 @@ document.addEventListener('click', function (event) {
             'lift-right-door-open-close'
           );
           lift.dataset.busy = false;
-        }, 7000);
+        }, 5000);
         break;
       }
     }
