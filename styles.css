@@ -148,7 +148,6 @@ input:focus {
   background-color: var(--primary-color);
   width: 100%;
   height: 100%;
-  float: right;
 }
 
 .lift-left-door-open-close {
@@ -159,6 +158,7 @@ input:focus {
 .lift-right-door-open-close {
   animation-name: openCloseRightDoor !important;
   animation-duration: 5s !important;
+  float: right;
 }
 
 .lift-left-door-container,

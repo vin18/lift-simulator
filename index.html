@@ -35,7 +35,7 @@
             <small>Error message</small>
           </div>
 
-          <input class="btn btn-primary" type="submit" value="Generate"></input>
+          <button class="btn btn-primary" onclick="handleSubmit()">Generate</input>
         </form>
       </section>
 
@@ -51,12 +51,12 @@
           </div>
 
           <div class="lifts">
-            <div class="lift">
+            <div class="lift" data-current-floor>
               <div class="lift-left-door-container">
-                <div class="lift-left-door"></div>
+                <div class="lift-left-door lift-left-door-open-close"></div>
               </div>
               <div class="lift-right-door-container">
-                <div class="lift-right-door"></div>
+                <div class="lift-right-door lift-right-door-open-close"></div>
               </div>
             </div>
           </div>

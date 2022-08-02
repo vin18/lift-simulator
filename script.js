@@ -77,10 +77,10 @@ function handleLifts() {
     innerHTML += `
       <div class="lift" data-current-floor=${0}>
         <div class="lift-left-door-container">
-          <div class="lift-left-door lift-left-door-open-close"></div>
+          <div class="lift-left-door"></div>
         </div>
         <div class="lift-right-door-container">
-          <div class="lift-right-door lift-right-door-open-close"></div>
+          <div class="lift-right-door"></div>
         </div>
       </div>
     `;
@@ -134,9 +134,46 @@ document.addEventListener('click', function (event) {
         lift.style.transition = `all ${2 * floorClicked}s`;
         lift.style.transform = `translateY(-${250 * floorClicked}px)`;
         lift.dataset.currentFloor = floorClicked;
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.add(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.add(
+            'lift-right-door-open-close'
+          );
+        }, 2000);
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.remove(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.remove(
+            'lift-right-door-open-close'
+          );
+        }, 7000);
+
         break;
       } else if (currentFloor === floorClicked) {
-        continue;
+        if (lift.dataset.busy === 'true') {
+          continue;
+        }
+        lift.children[0].children[0].classList.add('lift-left-door-open-close');
+        lift.children[1].children[0].classList.add(
+          'lift-right-door-open-close'
+        );
+        lift.dataset.busy = true;
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.remove(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.remove(
+            'lift-right-door-open-close'
+          );
+          lift.dataset.busy = false;
+        }, 7000);
+        break;
       }
     }
   } else if (liftMoveDown) {
@@ -154,9 +191,46 @@ document.addEventListener('click', function (event) {
           lift.style.transition = `all ${2}s`;
         }
         lift.dataset.currentFloor = floorClicked;
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.add(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.add(
+            'lift-right-door-open-close'
+          );
+        }, 2000);
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.remove(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.remove(
+            'lift-right-door-open-close'
+          );
+        }, 7000);
+
         break;
       } else if (currentFloor === floorClicked) {
-        continue;
+        if (lift.dataset.busy === 'true') {
+          continue;
+        }
+        lift.children[0].children[0].classList.add('lift-left-door-open-close');
+        lift.children[1].children[0].classList.add(
+          'lift-right-door-open-close'
+        );
+        lift.dataset.busy = true;
+
+        setTimeout(() => {
+          lift.children[0].children[0].classList.remove(
+            'lift-left-door-open-close'
+          );
+          lift.children[1].children[0].classList.remove(
+            'lift-right-door-open-close'
+          );
+          lift.dataset.busy = false;
+        }, 7000);
+        break;
       }
     }
   }
