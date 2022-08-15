@@ -7,8 +7,7 @@ const lifts = document.querySelector('.lifts');
 const lift = document.querySelector('.lift');
 const floorsErrorMessage = document.querySelector('.floors-input + small');
 const liftsErrorMessage = document.querySelector('.lifts-input + small');
-
-let currentFloorCalled = 0;
+const buttons = document.querySelector('button');
 
 function handleNumericKeyPress(event) {
   const inputValidationChecks =
@@ -133,9 +132,10 @@ document.addEventListener('click', function (event) {
       if (currentFloor < floorClicked && currentFloor !== floorClicked) {
         lift.style.transition = `all ${2 * floorClicked}s`;
         lift.style.transform = `translateY(-${250 * floorClicked}px)`;
-        lift.dataset.currentFloor = floorClicked;
 
         setTimeout(() => {
+          lift.dataset.currentFloor = floorClicked;
+
           lift.children[0].children[0].classList.add(
             'lift-left-door-open-close'
           );
@@ -151,7 +151,8 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.remove(
             'lift-right-door-open-close'
           );
-        }, 7000 * floorClicked);
+          lift.dataset.busy = false;
+        }, 5000 * floorClicked);
 
         break;
       } else if (currentFloor === floorClicked) {
@@ -190,9 +191,10 @@ document.addEventListener('click', function (event) {
           lift.style.transform = `translateY(0px)`;
           lift.style.transition = `all ${2 * currentFloor}s`;
         }
-        lift.dataset.currentFloor = floorClicked;
 
         setTimeout(() => {
+          lift.dataset.currentFloor = floorClicked;
+
           lift.children[0].children[0].classList.add(
             'lift-left-door-open-close'
           );
@@ -208,7 +210,8 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.remove(
             'lift-right-door-open-close'
           );
-        }, 7000 * floorClicked);
+          lift.dataset.busy = false;
+        }, 5000 * floorClicked);
 
         break;
       } else if (currentFloor === floorClicked) {
