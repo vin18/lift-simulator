@@ -142,7 +142,7 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.add(
             'lift-right-door-open-close'
           );
-        }, 2000);
+        }, 2000 * floorClicked);
 
         setTimeout(() => {
           lift.children[0].children[0].classList.remove(
@@ -151,7 +151,7 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.remove(
             'lift-right-door-open-close'
           );
-        }, 7000);
+        }, 7000 * floorClicked);
 
         break;
       } else if (currentFloor === floorClicked) {
@@ -188,7 +188,7 @@ document.addEventListener('click', function (event) {
           lift.style.transition = `all ${2 * floorClicked}s`;
         } else {
           lift.style.transform = `translateY(0px)`;
-          lift.style.transition = `all ${2}s`;
+          lift.style.transition = `all ${2 * currentFloor}s`;
         }
         lift.dataset.currentFloor = floorClicked;
 
@@ -199,7 +199,7 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.add(
             'lift-right-door-open-close'
           );
-        }, 2000);
+        }, 2000 * floorClicked);
 
         setTimeout(() => {
           lift.children[0].children[0].classList.remove(
@@ -208,7 +208,7 @@ document.addEventListener('click', function (event) {
           lift.children[1].children[0].classList.remove(
             'lift-right-door-open-close'
           );
-        }, 7000);
+        }, 7000 * floorClicked);
 
         break;
       } else if (currentFloor === floorClicked) {
