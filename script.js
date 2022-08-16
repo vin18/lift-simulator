@@ -7,7 +7,6 @@ const lifts = document.querySelector('.lifts');
 const lift = document.querySelector('.lift');
 const floorsErrorMessage = document.querySelector('.floors-input + small');
 const liftsErrorMessage = document.querySelector('.lifts-input + small');
-const buttons = document.querySelector('button');
 
 function handleNumericKeyPress(event) {
   const inputValidationChecks =
@@ -41,8 +40,9 @@ function handleFloors() {
         ${
           i !== 0
             ? `
-          <button data-current-floor="${i}" data-move-up="true" class="btn-up btn-up-${i}">
-            <i data-current-floor="${i}" data-move-up="true" class="fa-solid fa-arrow-up"></i>
+          <button data-current-floor="${i}" data-move-up="true" class="lift-btn btn-up btn-up-${i}">
+            <!-- <i class="fa-solid fa-arrow-up"></i> -->
+            U
           </button>`
             : ''
         }
@@ -50,8 +50,9 @@ function handleFloors() {
         ${
           i !== lastFloor
             ? `
-          <button data-current-floor="${i}" data-move-down="true" class="btn-down btn-down-${i}">
-            <i data-current-floor="${i}" data-move-down="true" class="fa-solid fa-arrow-down"></i>
+          <button data-current-floor="${i}" data-move-down="true" class="lift-btn btn-down btn-down-${i}">
+            <!-- <i class="fa-solid fa-arrow-down"></i> -->
+            D
           </button>
         `
             : ''
@@ -118,6 +119,22 @@ function handleError(element, errorElement, errorMessage = '') {
   errorElement.style.display = 'block';
 }
 
+function disableButtons() {
+  const buttons = document.querySelectorAll('.lift-btn');
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].disabled = true;
+  }
+}
+
+function enableButtons() {
+  const buttons = document.querySelectorAll('.lift-btn');
+
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].disabled = false;
+  }
+}
+
 document.addEventListener('click', function (event) {
   const element = event.target;
   const floorClicked = Number(element.dataset.currentFloor);
@@ -132,6 +149,7 @@ document.addEventListener('click', function (event) {
       if (currentFloor < floorClicked && currentFloor !== floorClicked) {
         lift.style.transition = `all ${2 * floorClicked}s`;
         lift.style.transform = `translateY(-${250 * floorClicked}px)`;
+        disableButtons();
 
         setTimeout(() => {
           lift.dataset.currentFloor = floorClicked;
@@ -154,16 +172,22 @@ document.addEventListener('click', function (event) {
           lift.dataset.busy = false;
         }, 5000 * floorClicked);
 
+        setTimeout(() => {
+          enableButtons();
+        }, 5000 * floorClicked);
+
         break;
       } else if (currentFloor === floorClicked) {
         if (lift.dataset.busy === 'true') {
           continue;
         }
+
         lift.children[0].children[0].classList.add('lift-left-door-open-close');
         lift.children[1].children[0].classList.add(
           'lift-right-door-open-close'
         );
         lift.dataset.busy = true;
+        disableButtons();
 
         setTimeout(() => {
           lift.children[0].children[0].classList.remove(
@@ -174,6 +198,11 @@ document.addEventListener('click', function (event) {
           );
           lift.dataset.busy = false;
         }, 5000);
+
+        setTimeout(() => {
+          enableButtons();
+        }, 5000);
+
         break;
       }
     }
@@ -191,6 +220,7 @@ document.addEventListener('click', function (event) {
           lift.style.transform = `translateY(0px)`;
           lift.style.transition = `all ${2 * currentFloor}s`;
         }
+        disableButtons();
 
         setTimeout(() => {
           lift.dataset.currentFloor = floorClicked;
@@ -213,6 +243,10 @@ document.addEventListener('click', function (event) {
           lift.dataset.busy = false;
         }, 5000 * floorClicked);
 
+        setTimeout(() => {
+          enableButtons();
+        }, 5000 * floorClicked);
+
         break;
       } else if (currentFloor === floorClicked) {
         if (lift.dataset.busy === 'true') {
@@ -223,6 +257,7 @@ document.addEventListener('click', function (event) {
           'lift-right-door-open-close'
         );
         lift.dataset.busy = true;
+        disableButtons();
 
         setTimeout(() => {
           lift.children[0].children[0].classList.remove(
@@ -232,6 +267,10 @@ document.addEventListener('click', function (event) {
             'lift-right-door-open-close'
           );
           lift.dataset.busy = false;
+        }, 5000);
+
+        setTimeout(() => {
+          enableButtons();
         }, 5000);
         break;
       }

@@ -106,6 +106,10 @@ input:focus {
   outline-color: var(--primary-color);
 }
 
+button {
+  cursor: pointer;
+}
+
 .btn {
   padding: 10px 20px;
   border-radius: 5px;
